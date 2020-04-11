@@ -1,7 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
-                                        PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager,\
+                                    PermissionsMixin
+from django.conf import settings
 
+
+# 27
+# Helper function to create user
 class UserManager(BaseUserManager):
 
     def create_user(self, email, password=None, **extra_fields):
@@ -30,7 +34,20 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-
+    # Overeriting objects and USERNAME_FIELD
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+
+class Tag(models.Model):
+    """Tags to be used for a recipe"""
+    name = models.CharField(max_length=255)
+    # Instead of referencing User directly, set the 1st arg (model) by settings
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return self.name
