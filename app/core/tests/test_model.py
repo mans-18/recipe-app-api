@@ -53,3 +53,12 @@ class ModelTests(TestCase):
         # On models.py/Tag class, name is set as the tag component to convert
         # to str. Could be name instead of tag?
         self.assertEqual(str(tag), tag.name)
+
+    def test_ingredient_str(self):
+        """Test the ingredient str representation"""
+        ingredient = models.Ingredient.objects.create(
+            user=sample_user(),
+            name='Cucumber'
+        )
+
+        self.assertEqual(str(ingredient), ingredient.name)

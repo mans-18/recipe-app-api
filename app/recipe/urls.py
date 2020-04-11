@@ -7,7 +7,8 @@ from recipe import views
 # One viewset may have multiple urls.
 router = DefaultRouter()
 router.register('tags', views.TagViewSet)
-# So the reverse function my find
+router.register('ingredients', views.IngredientViewSet)
+# So the reverse function may find
 app_name = 'recipe'
 
 urlpatterns = [
