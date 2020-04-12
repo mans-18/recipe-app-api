@@ -63,3 +63,21 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Recipe(models.Model):
+    """Recipe object"""
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    title = models.CharField(max_length=255)
+    time_minutes = models.IntegerField()
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+    link = models.CharField(max_length=255, blank=True)
+    # Could be Ingredient (not str) but the classes must hold a specific order
+    ingredients = models.ManyToManyField('ingredient')
+    tags = models.ManyToManyField('tag')
+
+    def __str__(self):
+        return self.title
