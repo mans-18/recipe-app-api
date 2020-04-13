@@ -8,6 +8,7 @@ from django.conf import settings
 # Helper function to create user
 class UserManager(BaseUserManager):
 
+    # https://docs.djangoproject.com/en/3.0/topics/auth/customizing/
     def create_user(self, email, password=None, **extra_fields):
         """Creates and saves a new user"""
         if not email:
