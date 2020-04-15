@@ -1,7 +1,17 @@
+import uuid
+import os
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager,\
                                     PermissionsMixin
 from django.conf import settings
+
+
+def recipe_image_file_path(instance, filename):
+    """Generate file pathfor new recipe image"""
+    ext = filename.split('.')[-1]
+    filename = f'{uuid.uuid4()}.{ext}'
+
+    return os.path.join('uploads/recipe/', filename)
 
 
 # 27
@@ -79,6 +89,7 @@ class Recipe(models.Model):
     # Could be Ingredient (not str) but the classes must hold a specific order
     ingredients = models.ManyToManyField('ingredient')
     tags = models.ManyToManyField('tag')
+    image = models.ImageField(null=True, upload_to=recipe_image_file_path)
 
     def __str__(self):
         return self.title
